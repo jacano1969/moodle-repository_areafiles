@@ -68,7 +68,7 @@ class repository_areafiles extends repository {
             // Moodle 2.2
             $context = context_user::instance($USER->id);
         } else {
-            // Moodle 2.1
+            // Moodle 2.0 and 2.1
             $context = get_context_instance(CONTEXT_USER, $USER->id);
         }
         $fs = get_file_storage();
