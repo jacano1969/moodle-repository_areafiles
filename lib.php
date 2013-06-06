@@ -64,7 +64,13 @@ class repository_areafiles extends repository {
             return $ret;
         }
 
-        $context = context_user::instance($USER->id);
+        if (class_exists('context_user')) {
+            // Moodle 2.2
+            $context = context_user::instance($USER->id);
+        } else {
+            // Moodle 2.1
+            $context = get_context_instance(CONTEXT_USER, $USER->id);
+        }
         $fs = get_file_storage();
         $files = $fs->get_directory_files($context->id, 'user', 'draft', $itemid, '/');
         foreach ($files as $file) {
@@ -77,23 +83,8 @@ class repository_areafiles extends repository {
                 'title' => $file->get_filename(),
                 'size' => $file->get_filesize(),
                 'source' => $fileurl->out(),
-                'datemodified' => $file->get_timemodified(),
-                'datecreated' => $file->get_timecreated(),
-                'author' => $file->get_author(),
-                'license' => $file->get_license(),
-                'isref' => $file->is_external_file(),
-                'icon' => $OUTPUT->pix_url(file_file_icon($file, 24))->out(false),
-                'thumbnail' => $OUTPUT->pix_url(file_file_icon($file, 90))->out(false)
+                'thumbnail' => $OUTPUT->pix_url(file_extension_icon($file->get_filename(), 32))->out(false)
             );
-            if ($file->get_status() == 666) {
-                $node['originalmissing'] = true;
-            }
-            if ($imageinfo = $file->get_imageinfo()) {
-                $node['realthumbnail'] = $fileurl->out(false, array('preview' => 'thumb', 'oid' => $file->get_timemodified()));
-                $node['realicon'] = $fileurl->out(false, array('preview' => 'tinyicon', 'oid' => $file->get_timemodified()));
-                $node['image_width'] = $imageinfo['width'];
-                $node['image_height'] = $imageinfo['height'];
-            }
             $ret['list'][] = $node;
         }
         $ret['list'] = array_filter($ret['list'], array($this, 'filter'));
