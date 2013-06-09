@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin capabilities for repository_areafiles
+ * Plugin capabilities for repository_areafilesplus
  *
- * @package    repository_areafiles
+ * @package    repository_areafilesplus
  * @copyright  2013 Marina Glancy
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,8 +26,16 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
-    'repository/areafiles:view' => array(
+    'repository/areafilesplus:view' => array(
         'captype' => 'read',
+        'contextlevel' => CONTEXT_MODULE,
+        'archetypes' => array(
+            'user' => CAP_ALLOW
+        )
+    ),
+
+    'repository/areafilesplus:manage' => array(
+        'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
         'archetypes' => array(
             'user' => CAP_ALLOW

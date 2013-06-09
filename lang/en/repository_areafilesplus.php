@@ -15,13 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'repository_areafiles'
+ * Strings for component 'repository_areafilesplus'
  *
  * @package   repository_areafiles
  * @copyright 2013 Marina Glancy
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['areafiles:view'] = 'View repository Embedded files';
-$string['pluginname_help'] = 'Files embedded in the current text editor';
+$string['areafilesplus:view'] = 'View repository Embedded files';
+$string['areafilesplus:manage'] = 'Manage files in repository Embedded files';
+$string['configplugin'] = 'Configuration for repository Embedded files Plus';
+$string['deleteselected'] = 'Delete selected files';
+$string['nofiles'] = 'There are no embedded files';
+$string['manageareafiles'] = 'Manage files embedded in text editor';
+$string['pluginname_help'] = 'Files embedded in the current text editor (with Manage functionality)';
 $string['pluginname'] = 'Embedded files';

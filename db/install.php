@@ -15,18 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Creating a default instance of areafiles repository on install
+ * Creating a default instance of areafilesplus repository on install
  *
- * @package    repository_areafiles
+ * @package    repository_areafilesplus
  * @copyright  2013 Marina Glancy
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-function xmldb_repository_areafiles_install() {
+function xmldb_repository_areafilesplus_install() {
     global $CFG;
     $result = true;
     require_once($CFG->dirroot.'/repository/lib.php');
-    $areafiles_plugin = new repository_type('areafiles', array(), true);
+    $areafiles_plugin = new repository_type('areafilesplus', array(), true);
     if(!$id = $areafiles_plugin->create(true)) {
         $result = false;
     }

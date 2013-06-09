@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Class repository_areafiles
+ * Class repository_areafilesplus
  *
- * @package   repository_areafiles
+ * @package   repository_areafilesplus
  * @copyright 2013 Marina Glancy
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -27,15 +27,15 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot . '/repository/lib.php');
 
 /**
- * Main class responsible for files listing in repostiory_areafiles
+ * Main class responsible for files listing in repostiory_areafilesplus
  *
- * @package   repository_areafiles
+ * @package   repository_areafilesplus
  * @copyright 2013 Marina Glancy
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class repository_areafiles extends repository {
+class repository_areafilesplus extends repository {
     /**
-     * Areafiles plugin doesn't require login, so list all files
+     * Areafiles Plus plugin doesn't require login, so list all files
      *
      * @return mixed
      */
@@ -62,6 +62,17 @@ class repository_areafiles extends repository {
         );
         if (empty($itemid) || $env !== 'editor') {
             return $ret;
+        }
+
+        // Form URL to manage files
+        $areacontextid = optional_param('ctx_id', SYSCONTEXTID, PARAM_INT);
+        $areacontext = context::instance_by_id($areacontextid);
+        if (has_capability('repository/areafilesplus:manage', $areacontext)) {
+            $maxbytes = optional_param('maxbytes', 0, PARAM_INT);
+            $manageurl = new moodle_url('/repository/areafilesplus/manage.php',
+                    array('itemid' => $itemid, 'maxbytes' => $maxbytes, 'ctx_id' => $areacontextid));
+            $ret['message'] = "<a href=\"#\" onclick=\"w=window.open('".$manageurl->out(false)."', 'areafilesplusmanage', 'fullscreen=no,width=800,height=600'); w.focus(); return false;\">".
+                    get_string('manageurl', 'repository'). "</a>";
         }
 
         $context = context_user::instance($USER->id);
