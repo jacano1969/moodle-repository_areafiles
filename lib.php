@@ -80,6 +80,7 @@ class repository_areafilesplus extends repository {
             $manageurl = new moodle_url('/repository/areafilesplus/manage.php',
                     array('itemid' => $itemid, 'maxbytes' => $maxbytes, 'ctx_id' => $areacontextid));
             $ret['message'] = "<a href=\"#\" onclick=\"w=window.open('".$manageurl->out(false)."', 'areafilesplusmanage', 'fullscreen=no,width=800,height=600'); w.focus(); return false;\">".
+                    '<img src="'.$OUTPUT->pix_url('a/setting').'"> '.
                     get_string('manageurl', 'repository'). "</a>";
         }
 
