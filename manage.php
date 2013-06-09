@@ -38,7 +38,15 @@ $contextid = optional_param('ctx_id', SYSCONTEXTID, PARAM_INT);
 $title = get_string('manageareafiles', 'repository_areafilesplus');
 
 $PAGE->set_url('/repository/areafilesplus/manage.php');
-$PAGE->set_context(context::instance_by_id($contextid));
+if (class_exists('context')) {
+    // Moodle 2.2
+    $PAGE->set_context(context::instance_by_id($contextid));
+    $usercontext = context_user::instance($USER->id);
+} else {
+    // Moodle 2.0 and 2.1
+    $PAGE->set_context(get_context_instance_by_id($contextid));
+    $usercontext = get_context_instance(CONTEXT_USER, $USER->id);
+}
 require_capability('repository/areafilesplus:manage', $PAGE->context);
 $PAGE->set_title($title);
 $PAGE->set_heading($title);
@@ -46,7 +54,6 @@ $PAGE->set_pagelayout('popup');
 
 $options = array('subdirs' => 0, 'maxbytes' => $maxbytes, 'maxfiles' => -1, 'context' => $PAGE->context);
 
-$usercontext = context_user::instance($USER->id);
 $fs = get_file_storage();
 $files = $fs->get_directory_files($usercontext->id, 'user', 'draft', $itemid, '/', false, false);
 $filenames = array();
