@@ -51,7 +51,7 @@ class repository_areafilesplus extends repository {
      * @return mixed
      */
     public function get_listing($path = '', $page = '') {
-        global $USER, $OUTPUT;
+        global $USER, $OUTPUT, $CFG;
         $itemid = optional_param('itemid', 0, PARAM_INT);
         $env = optional_param('env', 'filepicker', PARAM_ALPHA);
         $ret = array(
@@ -79,9 +79,15 @@ class repository_areafilesplus extends repository {
             $maxbytes = optional_param('maxbytes', 0, PARAM_INT);
             $manageurl = new moodle_url('/repository/areafilesplus/manage.php',
                     array('itemid' => $itemid, 'maxbytes' => $maxbytes, 'ctx_id' => $areacontextid));
-            $ret['message'] = "<a href=\"#\" onclick=\"w=window.open('".$manageurl->out(false)."', 'areafilesplusmanage', 'fullscreen=no,width=800,height=600'); w.focus(); return false;\">".
-                    '<img src="'.$OUTPUT->pix_url('a/setting').'"> '.
-                    get_string('manageurl', 'repository'). "</a>";
+            if ($CFG->version < 2011070100) {
+                // Moodle 2.0 - open manage link in new window
+                $ret['manage'] = $manageurl->out(false);
+            } else {
+                // Moodle 2.1 - open manage link in a nice popup
+                $ret['message'] = "<a href=\"#\" onclick=\"w=window.open('".$manageurl->out(false)."', 'areafilesplusmanage', 'fullscreen=no,width=800,height=600'); w.focus(); return false;\">".
+                        '<img src="'.$OUTPUT->pix_url('a/setting').'"> '.
+                        get_string('manageurl', 'repository'). "</a>";
+            }
         }
 
         $fs = get_file_storage();
