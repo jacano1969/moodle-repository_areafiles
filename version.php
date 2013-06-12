@@ -24,8 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2013060900;        // The current plugin version (Date: YYYYMMDDXX)
+$plugin->version   = 2013061201;        // The current plugin version (Date: YYYYMMDDXX)
 $plugin->requires  = 2011033000;        // Requires this Moodle version (Moodle 2.0 - 2.2)
-$plugin->release   = "1.0 Plus for M2.0-2.2";
+$plugin->release   = "1.1 Plus for M2.0-2.2";
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->component = 'repository_areafilesplus'; // Full name of the plugin (used for diagnostics)
